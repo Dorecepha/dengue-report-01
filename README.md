@@ -2,10 +2,6 @@
 
 This file is a report on a replication attempt of the mentioned study from Tuan et al. (2015). This study is to be found at https://doi.org/10.1371/journal.pntd.0003638.
 
-## Project Overview
-
-This repository replicates and validates results from "Assessing generalizability of a dengue classifier across multiple datasets" (Lu, Li, and Evans). The analysis uses five dengue fever datasets to assess the generalizability of classification models, with particular focus on the Tuan et al. (2015) dataset (Dataset 1).
-
 **Key modeling goal**: Predict dengue diagnosis from clinical and laboratory variables using logistic regression, with an emphasis on the "EDC" (Early Dengue Classifier) model using Age, WBC (white blood cell count), and PLT (platelet count).
 
 ## Repository Structure
