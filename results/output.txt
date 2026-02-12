@@ -1,0 +1,209 @@
+D:\Projects\dengue-generalizability\code\logistic_regression_set01.py:404: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  df_full['DateEnrol'] = pd.to_datetime(df_full['DateEnrol'])
+Raw dataset: 5726 rows, 35 columns
+
+Missingness in Table 3 variables:
+  WBC                 2 missing (0.0%)
+  PLT                 2 missing (0.0%)
+  HCT                 2 missing (0.0%)
+  ALB                17 missing (0.3%)
+  AST                17 missing (0.3%)
+  CK                 17 missing (0.3%)
+
+After dropping rows missing any Table 3 variable: 5707 rows (dropped 19)
+Target from paper: 5707 rows
+
+Outcome distribution:
+  Dengue (1):     1692
+  Non-Dengue (0): 4015
+  Prevalence:     0.296
+Optimization terminated successfully.
+         Current function value: 0.454328
+         Iterations 7
+
+======================================================================
+LOGISTIC REGRESSION SUMMARY
+======================================================================
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:                 Dengue   No. Observations:                 5707
+Model:                          Logit   Df Residuals:                     5703
+Method:                           MLE   Df Model:                            3
+Date:                Sat, 07 Feb 2026   Pseudo R-squ.:                  0.2526
+Time:                        22:14:03   Log-Likelihood:                -2592.8
+converged:                       True   LL-Null:                       -3469.0
+Covariance Type:            nonrobust   LLR p-value:                     0.000
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          1.2356      0.155      7.969      0.000       0.932       1.539
+Age            0.1393      0.010     13.935      0.000       0.120       0.159
+WBC           -0.2541      0.014    -18.679      0.000      -0.281      -0.227
+PLT           -0.0059      0.001     -9.716      0.000      -0.007      -0.005
+==============================================================================
+
+======================================================================
+COMPARISON WITH TUAN ET AL. (2015) REPORTED COEFFICIENTS
+======================================================================
+
+Variable      Fitted coef   Paper coef   Difference    Fitted OR     Paper OR      p-value
+--------------------------------------------------------------------------------------
+Intercept          1.2356        1.236      -0.0004            —            —       0.0000
+Age                0.1393        0.139      +0.0003       1.1495         1.15       0.0000
+WBC               -0.2541       -0.254      -0.0001       0.7756         0.78       0.0000
+PLT (OR/10)       -0.0059       -0.006      +0.0001       0.9423         0.94       0.0000
+
+Variable           Coef                   95% CI         OR              95% CI (OR)
+----------------------------------------------------------------------------------
+Intercept        1.2356 [    0.9317,     1.5395]     3.4403 [    2.5388,     4.6620]
+Age              0.1393 [    0.1197,     0.1589]     1.1495 [    1.1272,     1.1723]
+WBC             -0.2541 [   -0.2807,    -0.2274]     0.7756 [    0.7552,     0.7966]
+PLT             -0.0059 [   -0.0071,    -0.0047]     0.9941 [    0.9929,     0.9953]
+
+Note: Tuan et al. report OR for PLT per 10-unit increase:
+  Fitted OR per 10-unit PLT increase: 0.9423
+  Paper OR per 10-unit PLT increase:  0.94
+
+======================================================================
+ROC / AUC
+======================================================================
+  Fitted AUC: 0.8289
+  Paper AUC:  0.829
+  Difference: -0.0001
+
+  Cutoff = 0.333 (paper):    Sens = 0.746, Spec = 0.767
+  Cutoff = 0.342 (paper optimal): Sens = 0.741, Spec = 0.776
+  Cutoff = 0.371 (Youden):  Sens = 0.713, Spec = 0.806
+
+Saved to images/roc_set01.pdf and images/roc_set01.png
+
+======================================================================
+CLASSIFICATION PERFORMANCE AT CUTOFF = 0.333
+======================================================================
+
+Confusion matrix:
+                  Predicted +    Predicted -
+  Actual +  (TP)        1263  (FN)        429   | 1692 actual positives
+  Actual -  (FP)         937  (TN)       3078   | 4015 actual negatives
+                        2200             3507
+
+Metric                         Fitted                    Paper     Diff
+----------------------------------------------------------------------
+Sensitivity     74.6% ( 72.5- 76.7%)    74.8% ( 73.0- 76.8%)    -0.2%
+Specificity     76.7% ( 75.3- 77.9%)    76.3% ( 75.2- 77.6%)    +0.4%
+PPV             57.4% ( 55.3- 59.5%)    57.1% ( 56.2- 59.0%)    +0.3%
+NPV             87.8% ( 86.6- 88.8%)    87.8% ( 86.8- 88.5%)    -0.0%
+
+======================================================================
+CALIBRATION (DECILE GROUPS)
+======================================================================
+
+Group      N  Events  Mean pred   Observed     Diff
+--------------------------------------------------
+    1    571      21     0.0108     0.0368  +0.0259
+    2    571      37     0.0407     0.0648  +0.0241
+    3    571      57     0.0831     0.0998  +0.0168
+    4    570      82     0.1374     0.1439  +0.0065
+    5    571      89     0.2018     0.1559  -0.0459
+    6    570     124     0.2745     0.2175  -0.0570
+    7    571     176     0.3685     0.3082  -0.0603
+    8    570     258     0.4757     0.4526  -0.0231
+    9    571     370     0.6056     0.6480  +0.0423
+   10    571     478     0.7666     0.8371  +0.0706
+
+Calibration statistics:
+  Metric                   Fitted      Paper
+  ------------------------------------------
+  Cal. intercept           0.0000          —
+  Cal. slope               1.0000       1.00
+  C-statistic (AUC)        0.8289       0.83
+  Brier score              0.1449          —
+  Brier scaled             0.3052       0.31
+
+Saved to images/calibration_set01.pdf and images/calibration_set01.png
+
+======================================================================
+S5 TABLE REPLICATION
+======================================================================
+
+--- TEMPORAL VALIDATION (train < 2012-06-15, test >= 2012-06-15) ---
+  Training: 3956 patients, Dengue: 1188 (30.0%)
+  Test:     1751 patients, Dengue: 504 (28.8%)
+
+  Metric                           Paper (S5)                     Fitted
+  --------------------------------------------------------------------
+  Cal. intercept                       -0.247                     -0.372
+  Cal. slope                            0.940                      1.028
+  AUC                                   0.776                      0.815
+  Sensitivity             0.786 (0.770-0.812)        0.808 (0.771-0.840)
+  Specificity             0.595 (0.583-0.612)        0.645 (0.618-0.671)
+  PPV                     0.460 (0.451-0.482)        0.479 (0.445-0.512)
+  NPV                     0.863 (0.850-0.877)        0.892 (0.870-0.911)
+
+--- SEASONAL (APPARENT) PERFORMANCE ---
+  Dry season (Jan-Jun): 2291 patients, Dengue: 587 (25.6%)
+  Wet season (Jul-Dec): 3416 patients, Dengue: 1105 (32.3%)
+
+  Metric                       Dry (S5)               Dry (fit)                Wet (S5)               Wet (fit)
+  ----------------------------------------------------------------------------------------------------------
+  AUC                             0.831                   0.841                   0.825                   0.821
+  Sensitivity       0.731 (0.726-0.750)     0.756 (0.720-0.789)     0.783 (0.771-0.798)     0.741 (0.715-0.766)
+  Specificity       0.792 (0.781-0.803)     0.784 (0.764-0.803)     0.758 (0.742-0.771)     0.754 (0.736-0.771)
+  PPV               0.587 (0.579-0.602)     0.547 (0.512-0.581)     0.570 (0.561-0.586)     0.590 (0.564-0.616)
+  NPV               0.911 (0.889-0.925)     0.903 (0.887-0.917)     0.864 (0.851-0.972)     0.859 (0.843-0.873)
+
+--- LEAVE-ONE-SITE-OUT CROSS-VALIDATION ---
+  7 sites
+
+  Approach 1: Fixed (Age + WBC + PLT):
+  Metric                           Paper S5                       Fitted
+  ----------------------------------------------------------------------
+  AUC                                 0.835          0.831 (0.804-0.852)
+  Sensitivity           0.795 (0.659-0.912)          0.751 (0.613-0.890)
+  Specificity           0.726 (0.550-0.839)          0.745 (0.570-0.839)
+  PPV                   0.505 (0.426-0.738)          0.565 (0.431-0.737)
+  NPV                   0.909 (0.748-0.945)          0.874 (0.746-0.934)
+  Cal. slope                          1.075          1.067 (0.871-1.272)
+  Cal. int.                          -0.200        -0.026 (-0.790-0.852)
+
+  Approach 2: Backward elimination per fold:
+  Metric                           Paper S5                       Fitted
+  ----------------------------------------------------------------------
+  AUC                                 0.835          0.853 (0.829-0.875)
+  Sensitivity           0.795 (0.659-0.912)          0.747 (0.627-0.890)
+  Specificity           0.726 (0.550-0.839)          0.789 (0.699-0.871)
+  PPV                   0.505 (0.426-0.738)          0.606 (0.519-0.764)
+  NPV                   0.909 (0.748-0.945)          0.879 (0.789-0.946)
+  Cal. slope                          1.075          1.021 (0.861-1.232)
+  Cal. int.                          -0.200        -0.027 (-0.557-0.705)
+
+  Pooled held-out predictions (all sites concatenated):
+  Metric            Fixed (Age+WBC+PLT)         Backward elim.               Paper S5
+  ------------------------------------------------------------------------------------
+  AUC                             0.826                  0.848                  0.835
+  Sens                            0.742                  0.743                  0.795
+  Spec                            0.762                  0.792                  0.726
+  PPV                             0.568                  0.601                  0.505
+  NPV                             0.875                  0.880                  0.909
+
+  Per-site detail (fixed Age+WBC+PLT):
+    Site      N  Dengue   Prev    AUC   Sens   Spec    PPV    NPV  CalSlp
+  ------------------------------------------------------------------------
+       1   1589     414  26.1%  0.852  0.751  0.810  0.582  0.902   1.091
+       2    657     279  42.5%  0.827  0.613  0.839  0.737  0.746   0.913
+       3   1109     335  30.2%  0.810  0.746  0.724  0.539  0.868   0.871
+       4    893     265  29.7%  0.850  0.819  0.758  0.588  0.908   1.272
+       7    599     182  30.4%  0.804  0.780  0.679  0.514  0.876   1.067
+      15    340      91  26.8%  0.844  0.890  0.570  0.431  0.934   1.220
+      16    520     126  24.2%  0.831  0.659  0.835  0.561  0.884   1.037
+
+  Per-site detail (backward elimination):
+    Site      N  #Vars    AUC   Sens   Spec    PPV    NPV  Selected variables
+  ----------------------------------------------------------------------------------
+       1   1589      9  0.863  0.775  0.795  0.571  0.909  Age, BMI, DayDisease, Temp, Vomiting, Skin, WBC, PLT, AST
+       2    657     10  0.855  0.695  0.841  0.764  0.789  Age, BMI, DayDisease, Temp, Vomiting, Skin, WBC, PLT, HCT, AST
+       3   1109     10  0.829  0.746  0.740  0.554  0.871  Age, BMI, DayDisease, Temp, Vomiting, Skin, WBC, PLT, HCT, AST
+       4    893     10  0.862  0.721  0.847  0.666  0.878  Age, BMI, DayDisease, Temp, Vomiting, Skin, WBC, PLT, HCT, AST
+       7    599     10  0.834  0.775  0.731  0.557  0.882  Age, BMI, DayDisease, Temp, Vomiting, Skin, WBC, PLT, HCT, AST
+      15    340     11  0.875  0.890  0.699  0.519  0.946  Age, BMI, DayDisease, Temp, Vomiting, Skin, Muco, WBC, PLT, HCT, AST
+      16    520     12  0.853  0.627  0.871  0.608  0.879  Age, BMI, DayDisease, Temp, Vomiting, Skin, Muco, WBC, PLT, HCT, ALB, AST
