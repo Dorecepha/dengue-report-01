@@ -1,0 +1,23 @@
+# Core data manipulation and analysis
+pandas>=1.5.0,<3.0.0
+numpy>=1.23.0,<2.0.0
+
+# Statistical modeling
+statsmodels>=0.14.0,<1.0.0
+
+# Machine learning
+scikit-learn>=1.2.0,<2.0.0
+
+# Scientific computing
+scipy>=1.10.0,<2.0.0
+
+# Visualization
+matplotlib>=3.6.0,<4.0.0
+seaborn>=0.12.0,<1.0.0
+
+# Excel file reading (required by pandas.read_excel)
+openpyxl>=3.0.0,<4.0.0
+
+# Optional: For better reproducibility, uncomment to pin exact versions
+# Use 'pip freeze > requirements-frozen.txt' after installation to create
+# a fully pinned version file for exact reproducibility
